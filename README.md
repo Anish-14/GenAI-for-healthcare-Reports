@@ -1,1 +1,0 @@
-# GenAI-for-healthcare-Reports
