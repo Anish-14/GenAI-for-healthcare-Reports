@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Healthcare Symptom Checker</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; }
+        .container { max-width: 700px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { text-align: center; }
+        form { margin-bottom: 30px; }
+        textarea { width: 100%; min-height: 80px; }
+        .report { background: #e9f7ef; padding: 20px; border-radius: 6px; margin-top: 20px; }
+        .label { font-weight: bold; }
+        ul { margin: 0; padding-left: 20px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Healthcare Symptom Checker</h1>
+    <form method="post">
+        <label for="symptoms_text" class="label">Describe your symptoms in a sentence or two:</label><br>
+        <textarea name="symptoms_text" id="symptoms_text" required placeholder="e.g. I have a headache and feel nauseous with a high fever.">{{ request.form.get('symptoms_text', '') }}</textarea><br><br>
+        <button type="submit">Get Report</button>
+    </form>
+    {% if report %}
+        <div class="report">
+            <h2>Personalized Healthcare Report</h2>
+            <p><span class="label">Extracted Symptoms:</span> {{ report.extracted|join(', ') if report.extracted else 'None detected' }}</p>
+            <p><span class="label">Disease:</span> {{ report.disease }}</p>
+            {% if report.description %}
+                <p><span class="label">Description:</span> {{ report.description }}</p>
+            {% endif %}
+            {% if report.medicines %}
+                <p><span class="label">Medicines:</span> {{ report.medicines }}</p>
+            {% endif %}
+            {% if report.precautions %}
+                <p><span class="label">Prevention/Precautions:</span>
+                    <ul>
+                        {% for p in report.precautions %}
+                            <li>{{ p }}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+            {% endif %}
+            <p><span class="label">Matched Symptoms:</span> {{ report.matched_symptoms }} / {{ report.total_symptoms }}</p>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html> 
