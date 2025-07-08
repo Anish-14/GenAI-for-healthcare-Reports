@@ -11,21 +11,21 @@ nlp = spacy.load("en_core_web_sm")
 
 # Load disease data
 DISEASE_DATA = []
-with open('archive (4)/dataset_with_medicines_final.csv', newline='', encoding='utf-8') as f:
+with open('datasets/dataset_with_medicines_final.csv', newline='', encoding='utf-8') as f:
     reader = csv.DictReader(f)
     for row in reader:
         DISEASE_DATA.append(row)
 
 # Load descriptions
 DESCRIPTION_MAP = {}
-with open('archive (4)/symptom_Description.csv', newline='', encoding='utf-8') as f:
+with open('datasets/symptom_Description.csv', newline='', encoding='utf-8') as f:
     reader = csv.DictReader(f)
     for row in reader:
         DESCRIPTION_MAP[row['Disease'].strip()] = row['Description']
 
 # Load precautions
 PRECAUTION_MAP = {}
-with open('archive (4)/symptom_precaution.csv', newline='', encoding='utf-8') as f:
+with open('datasets/symptom_precaution.csv', newline='', encoding='utf-8') as f:
     reader = csv.DictReader(f)
     for row in reader:
         PRECAUTION_MAP[row['Disease'].strip()] = [row['Precaution_1'], row['Precaution_2'], row['Precaution_3'], row['Precaution_4']]
